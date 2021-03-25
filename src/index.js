@@ -1,34 +1,34 @@
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from "@apollo/client";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from 'react-redux';
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { PersistGate } from 'redux-persist/integration/react';
+import { PersistGate } from "redux-persist/integration/react";
 import Layout from "./components/hoc/Layout";
 import config from "./config";
 import * as Constants from "./Constants";
-import client from './graphql/client';
+import client from "./graphql/client";
 import history from "./history";
 import "./index.css";
-import returnStoreAndPersistor from './logic/configureStore';
+import returnStoreAndPersistor from "./logic/configureStore";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorker from "./serviceWorker";
 
-
-const {store} = returnStoreAndPersistor();
-const {persistor} = returnStoreAndPersistor();
+// initialize store
+const { store } = returnStoreAndPersistor();
+const { persistor } = returnStoreAndPersistor();
 
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-  <BrowserRouter history={history} basename={config.basename}>
-    <>
-      <ApolloProvider client={client}>
-      <Layout Constants={Constants}  />
-      </ApolloProvider>
-    </>
-  </BrowserRouter>
-  </PersistGate>
+      <BrowserRouter history={history} basename={config.basename}>
+        <>
+          <ApolloProvider client={client}>
+            <Layout Constants={Constants} />
+          </ApolloProvider>
+        </>
+      </BrowserRouter>
+    </PersistGate>
   </Provider>,
   document.getElementById("root")
 );

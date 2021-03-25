@@ -78,9 +78,6 @@ export function promiseAction(apiRequest, action) {
 
 
 export function dosetUpdateCart(cart,products) {
-  console.log("carrt innder",cart)
-  console.log("products innder",products)
-
   return (dispatch) => {
     dispatch(setUpdateCart(cart,products));
   };
