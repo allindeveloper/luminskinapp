@@ -2,21 +2,22 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import Axios from "axios";
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
+import { PersistGate } from 'redux-persist/integration/react';
 import Layout from "./components/hoc/Layout";
 import config from "./config";
 import * as Constants from "./Constants";
 import history from "./history";
 import "./index.css";
+import returnStoreAndPersistor from './logic/configureStore';
 import reportWebVitals from "./reportWebVitals";
 import { Service } from "./Services";
 import * as serviceWorker from "./serviceWorker";
 
 
-const instance = Axios.create({
-  baseURL: "",
-  headers: {},
-});
+const {store} = returnStoreAndPersistor();
+const {persistor} = returnStoreAndPersistor();
 
 const client = new ApolloClient({
   uri: 'https://pangaea-interviews.now.sh/api/graphql',
@@ -25,14 +26,17 @@ const client = new ApolloClient({
 const url = process.env.REACT_APP_BASE_URI;
 
 ReactDOM.render(
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
   <BrowserRouter history={history} basename={config.basename}>
     <>
-      {" "}
       <ApolloProvider client={client}>
       <Layout Constants={Constants} Service={Service.bind(null, url, Axios)} />
       </ApolloProvider>
     </>
-  </BrowserRouter>,
+  </BrowserRouter>
+  </PersistGate>
+  </Provider>,
   document.getElementById("root")
 );
 

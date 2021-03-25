@@ -4,6 +4,7 @@ import styled from "styled-components";
 import query from "../../graphql/query";
 import { getAllCurrencies } from "../../graphql/services/currency";
 import { getAllProducts } from "../../graphql/services/products";
+import Cart from "../Cart/Cart";
 
 const Products = () => {
   const [data, setData] = useState({
@@ -12,7 +13,7 @@ const Products = () => {
     allproducts: [],
     currencies: [],
     selectedCurrency: "USD",
-    showCart: false,
+    showCart: true,
   });
   useEffect(() => {
     fetchData();
@@ -49,7 +50,6 @@ const Products = () => {
   };
   const renderProducts = (allproducts) => {
     let domElems = [];
-    console.log("allproducts",allproducts)
     for (let i in allproducts) {
       domElems.push(
         <li className="product-item" key={allproducts[i].id}>
@@ -67,6 +67,8 @@ const Products = () => {
       <ReactPlaceholder ready={true} customPlaceholder={<div>Loading</div>}>
         <ul>{!data.isLoading && renderProducts(data.allproducts)}</ul>
       </ReactPlaceholder>
+
+      <Cart showCart={data.showCart}/>
     </StyledContainer>
   );
 };
