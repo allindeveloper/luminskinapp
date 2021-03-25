@@ -8,7 +8,6 @@ import Layout from "./components/hoc/Layout";
 import config from "./config";
 import * as Constants from "./Constants";
 import client from "./graphql/client";
-import history from "./history";
 import "./index.css";
 import returnStoreAndPersistor from "./logic/configureStore";
 import reportWebVitals from "./reportWebVitals";
@@ -21,7 +20,7 @@ const { persistor } = returnStoreAndPersistor();
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <BrowserRouter history={history} basename={config.basename}>
+      <BrowserRouter  basename={config.basename}>
         <>
           <ApolloProvider client={client}>
             <Layout Constants={Constants} />

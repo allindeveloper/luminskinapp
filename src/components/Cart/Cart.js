@@ -14,7 +14,14 @@ import {
 import CartCard from "../Card/CartCard";
 import ArrowRight from "../CustomIcon/ArrowRight";
 import "./cart.scss";
-const Cart = ({allproducts, showCart, handleCartClose, cartData,allcurrencies, currentCurrency }) => {
+const Cart = ({
+  allproducts,
+  showCart,
+  handleCartClose,
+  cartData,
+  allcurrencies,
+  currentCurrency,
+}) => {
   const dispatch = useDispatch();
   const mounted = useRef();
 
@@ -23,7 +30,7 @@ const Cart = ({allproducts, showCart, handleCartClose, cartData,allcurrencies, c
     for (let i in cartData) {
       cartelems.push(
         <CartCard
-          index={i}
+          key={cartData[i].id}
           item={cartData[i]}
           currentCurrency={currentCurrency}
           handleDecrementItemQuantity={handleDecrementItemQuantity}
@@ -47,9 +54,9 @@ const Cart = ({allproducts, showCart, handleCartClose, cartData,allcurrencies, c
     }
   };
 
- const handleRemoveProduct = (index)=>{
+  const handleRemoveProduct = (index) => {
     dispatch(doRemoveFromCartItem(cartData.cart, index));
-  }
+  };
 
   const getTotalAmount = (cart) => {
     let total = 0;
@@ -61,32 +68,31 @@ const Cart = ({allproducts, showCart, handleCartClose, cartData,allcurrencies, c
   };
 
   const handleChangeCurrency = (value) => {
-    dispatch( fetchAllProducts(value));
-    dispatch(doSetCurrentCurrency(value))
+    dispatch(fetchAllProducts(value));
+    dispatch(doSetCurrentCurrency(value));
   };
 
   useEffect(() => {
-    
     if (!mounted.current) {
-        mounted.current = true;
-      } else {
-        if(allproducts.length){
-            dispatch(dosetUpdateCart(cartData.cart,allproducts))
-          }
+      mounted.current = true;
+    } else {
+      if (allproducts.length) {
+        dispatch(dosetUpdateCart(cartData.cart, allproducts));
       }
+    }
   }, [allproducts]);
 
-  const renderCurrencies = (allcurrencies)=>{
+  const renderCurrencies = (allcurrencies) => {
     let domElems = [];
-    for(let i in allcurrencies){
-        domElems.push(
-            <option value={allcurrencies[i]} >
-            {allcurrencies[i]}
-          </option>
-        )
+    for (let i in allcurrencies) {
+      domElems.push(
+        <option value={allcurrencies[i]} key={allcurrencies[i]}>
+          {allcurrencies[i]}
+        </option>
+      );
     }
     return domElems;
-  }
+  };
   return (
     <SlidingPane
       className=""
@@ -103,18 +109,10 @@ const Cart = ({allproducts, showCart, handleCartClose, cartData,allcurrencies, c
           onChange={(e) => handleChangeCurrency(e.target.value)}
           value={currentCurrency}
         >
-            {allcurrencies.length>0&& renderCurrencies(allcurrencies)}
-          {/* {allcurrencies&&allcurrencies?.map((currency) => (
-            <option value={currency} >
-              {currency}
-            </option>
-          ))} */}
+          {allcurrencies.length > 0 && renderCurrencies(allcurrencies)}
         </select>
       </div>
-      <div className="cart-scroll">
-          {renderCart(cartData.cart)}
-      </div>
-      
+      <div className="cart-scroll">{renderCart(cartData.cart)}</div>
 
       <br />
       <div className="cart-footer-container">
@@ -127,10 +125,10 @@ const Cart = ({allproducts, showCart, handleCartClose, cartData,allcurrencies, c
                 .format(getTotalAmount(cartData.cart))}
             </span>
           </div>
-          <button className="make-subscription">
+          <button className="subscription">
             Make this a subscription (Save 20%)
           </button>
-          <button className="proceed-checkout">Proceed to checkout</button>
+          <button className="checkout">Proceed to checkout</button>
         </div>
       </div>
     </SlidingPane>
