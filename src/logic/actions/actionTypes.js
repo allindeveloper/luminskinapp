@@ -8,11 +8,29 @@ const actionTypes = {
 
   ADD_TO_CART:"ADD_TO_CART",
   
-  REMOVE_FROM_CART:"REMOVE_FROM_CART",
-  SET_CURRENT_CURRENCY:"SET_CURRENT_CURRENCY"
+  REMOVE_FROM_CART_ITEM:"REMOVE_FROM_CART_ITEM",
+  SET_CURRENT_CURRENCY:"SET_CURRENT_CURRENCY",
+
+
+  INCREMENT_ITEM_QUANITY:"INCREMENT_ITEM_QUANITY",
+
+  DECREMENT_ITEM_QUANITY:"DECREMENT_ITEM_QUANITY"
 };
 
 
+
+
+export const setIncrementItemQuantity = (selectedItem,cart) => ({
+  type: actionTypes.INCREMENT_ITEM_QUANITY,
+  payload: { selectedItem ,cart},
+
+});
+
+export const setDecrementItemQuantity = (selectedItem,cart) => ({
+  type: actionTypes.DECREMENT_ITEM_QUANITY,
+  payload: { selectedItem ,cart},
+
+});
 
 export const setAddCurrentCurrency = (currentCurrency) => ({
   type: actionTypes.SET_CURRENT_CURRENCY,
@@ -25,9 +43,9 @@ export const setAddToCart = (cart,product) => ({
   payload: { cart,product },
 
 });
-export const setRemoveFromCart = (cart) => ({
-  type: actionTypes.REMOVE_FROM_CART,
-  payload: { cart },
+export const setRemoveFromCartItem = (cart,index) => ({
+  type: actionTypes.REMOVE_FROM_CART_ITEM,
+  payload: { cart ,index},
 
 });
 

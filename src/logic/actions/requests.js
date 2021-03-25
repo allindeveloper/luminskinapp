@@ -6,10 +6,7 @@ import actionTypes, {
   fetchAllCurrencySuccess,
   fetchAllProductsPending,
   fetchAllProductsSuccess,
-
-  setAddCurrentCurrency, setAddToCart,
-
-  setRemoveFromCart
+  setAddCurrentCurrency, setAddToCart, setDecrementItemQuantity, setIncrementItemQuantity, setRemoveFromCartItem
 } from "./actionTypes";
 
 /* Utility functions */
@@ -77,6 +74,17 @@ export function promiseAction(apiRequest, action) {
   };
 }
 
+export function doIncrementCartItemQuantity(selectedItem,cart) {
+  return (dispatch) => {
+    dispatch(setIncrementItemQuantity(selectedItem,cart));
+  };
+}
+
+export function doDecrementCartItemQuantity(selectedItem,cart) {
+  return (dispatch) => {
+    dispatch(setDecrementItemQuantity(selectedItem,cart));
+  };
+}
 
 export function doSetCurrentCurrency(currentCurrency) {
   return (dispatch) => {
@@ -90,9 +98,9 @@ export function doSetAllToCart(cart,product) {
   };
 }
 
-export function doRemoveFromCart(cart) {
+export function doRemoveFromCartItem(cart,index) {
   return (dispatch) => {
-    dispatch(setRemoveFromCart(cart));
+    dispatch(setRemoveFromCartItem(cart,index));
   };
 }
 
@@ -100,7 +108,6 @@ export function fetchAllProducts(selectedCurrency) {
   return (dispatch) => {
     dispatch(fetchAllProductsPending(true));
     return query(getAllProducts(selectedCurrency)).then((response) => {
-      console.log("products response", response);
       const allproducts = response?.data?.products || [];
       dispatch(fetchAllProductsSuccess(allproducts));
       return allproducts;

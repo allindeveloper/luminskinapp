@@ -1,15 +1,15 @@
 import React from "react";
 import { appHelpers } from "../../appHelpers";
+import Minus from "../../assets/images/svg/minus.svg";
+import Plus from "../../assets/images/svg/plus.svg";
 import SpaceBottom from "../Space/SpaceBottom";
 import "./cartcard.scss";
-const CartCard = ({item,currentCurrency}) => {
-    console.log("Carr item",item)
-
-    console.log("currentCurrency",currentCurrency)
+const CartCard = ({index, item, currentCurrency, handleIncrementItemQuantity ,handleDecrementItemQuantity}) => {
+  
   return (
-    <div class="row">
-      <div class="column">
-        <div class="card">
+    <div className="row">
+      <div className="column">
+        <div className="card">
           <div
             style={{
               display: "flex",
@@ -19,8 +19,24 @@ const CartCard = ({item,currentCurrency}) => {
           >
             <h4>{item.title}</h4>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <div>plusminus</div>
-              <div>{appHelpers.formatPrice(currentCurrency).format(item.price)}</div>
+              <div className="cart-product-quantity">
+                <img
+                  src={Minus}
+                  alt="Minus Icon"
+                    onClick={()=>handleDecrementItemQuantity(item, index)}
+                />
+                <span className="cart-product-quantity">
+                  {item.quantity}
+                </span>
+                <img
+                  src={Plus}
+                  alt="Plus Icon"
+                  onClick={() => handleIncrementItemQuantity(item)}
+                />
+              </div>
+              <div>
+                {appHelpers.formatPrice(currentCurrency).format(item.price)}
+              </div>
             </div>
           </div>
           <div className="cart-image">

@@ -8,3 +8,47 @@
     background-color: #F2F3F0 !important;
     border-bottom: none;
 }
+
+.cart-footer-container {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    
+    >.cart-footer-content{
+      display: flex;
+      flex-direction: column;
+      padding: 0 20px;
+
+      >.cart-total-container {
+        display: flex;
+        justify-content: space-between;
+        height: 60px;
+        align-items: center;
+        border-top: 1px solid #6F7C70;
+      }
+
+      >button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        border: none;
+        cursor: pointer;
+      }
+
+      >.make-subscription{
+        background: #FFFFFF;
+        border-style: 1px solid #2C2E2B;
+        letter-spacing: 2px;
+      }
+
+      >.proceed-checkout{
+        background: #4B5648;
+        color: #FFFFFF;
+      }
+    }
+  }
