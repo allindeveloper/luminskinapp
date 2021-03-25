@@ -1,4 +1,4 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 import Axios from "axios";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -8,6 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Layout from "./components/hoc/Layout";
 import config from "./config";
 import * as Constants from "./Constants";
+import client from './graphql/client';
 import history from "./history";
 import "./index.css";
 import returnStoreAndPersistor from './logic/configureStore';
@@ -19,10 +20,10 @@ import * as serviceWorker from "./serviceWorker";
 const {store} = returnStoreAndPersistor();
 const {persistor} = returnStoreAndPersistor();
 
-const client = new ApolloClient({
-  uri: 'https://pangaea-interviews.now.sh/api/graphql',
-  cache: new InMemoryCache()
-});
+// const client = new ApolloClient({
+//   uri: 'https://pangaea-interviews.now.sh/api/graphql',
+//   cache: new InMemoryCache()
+// });
 const url = process.env.REACT_APP_BASE_URI;
 
 ReactDOM.render(

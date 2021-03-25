@@ -2,7 +2,8 @@ import actionTypes from "../actions/actionTypes";
 
 const initialState = {
   allcurrencies:[],
-  allcurrenciesLoading:false
+  allcurrenciesLoading:false,
+  currentCurrency:""
 };
 
 const currencyReducer = (state = initialState, action) => {
@@ -17,8 +18,16 @@ const currencyReducer = (state = initialState, action) => {
       return {
         ...state,
         allcurrencies: action.payload.allcurrencies,
+        currentCurrency:action.payload.allcurrencies[0],
         allcurrenciesLoading:false
       };
+    
+      case actionTypes.SET_CURRENT_CURRENCY:
+        return {
+          ...state,
+          currentCurrency: action.payload.currentCurrency,
+        };
+   
     default:
       return state;
   }

@@ -1,52 +1,65 @@
 import React, { useEffect, useState } from "react";
 import ReactPlaceholder from "react-placeholder";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import query from "../../graphql/query";
-import { getAllCurrencies } from "../../graphql/services/currency";
-import { getAllProducts } from "../../graphql/services/products";
+import { doSetAllToCart } from "../../logic/actions/requests";
 import Cart from "../Cart/Cart";
 
 const Products = () => {
-  const [data, setData] = useState({
-    isLoading: true,
-    showError: false,
-    allproducts: [],
-    currencies: [],
-    selectedCurrency: "USD",
-    showCart: true,
-  });
+  const dispatch = useDispatch();
+  const productsSelector = useSelector((state) => state.productsReducer);
+  const productsData = productsSelector && productsSelector;
+
+  const currencySelector = useSelector((state) => state.currencyReducer);
+  const currencyData = currencySelector && currencySelector;
+
+  const cartSelector = useSelector((state) => state.cartReducer);
+  const cartData = cartSelector && cartSelector;
+
+  const [showCart, setshowCart] = useState(false);
+  // const [data, setData] = useState({
+  //   selectedCurrency: "USD",
+  //   showCart: false,
+  // });
   useEffect(() => {
-    fetchData();
+    // fetchData();
+    console.log("CartData", cartData);
   }, []);
 
-  const fetchData = async () => {
-    try {
-      let selectedCurrency = data.selectedCurrency;
-      const currenciesResponse = await query(getAllCurrencies());
-      const allproducts = await fetchAllProducts(selectedCurrency);
-      const currencies = currenciesResponse?.data?.currency || [];
-      selectedCurrency = currencies.length ? currencies[0] : selectedCurrency;
-      setData({
-        ...data,
-        isLoading: false,
-        allproducts,
-        currencies,
-        selectedCurrency,
-      });
-    } catch (err) {
-      console.error(err);
-      setData({ ...data, isLoading: false, showError: true });
-    }
-  };
+  // // const fetchData = async () => {
+  // //   try {
+  // //     let selectedCurrency = data.selectedCurrency;
+  // //     const currenciesResponse = await query(getAllCurrencies());
+  // //     const allproducts = await fetchAllProducts(selectedCurrency);
+  // //     const currencies = currenciesResponse?.data?.currency || [];
+  // //     selectedCurrency = currencies.length ? currencies[0] : selectedCurrency;
+  // //     setData({
+  // //       ...data,
+  // //       isLoading: false,
+  // //       allproducts,
+  // //       currencies,
+  // //       selectedCurrency,
+  // //     });
+  // //   } catch (err) {
+  // //     console.error(err);
+  // //     setData({ ...data, isLoading: false, showError: true });
+  // //   }
+  // // };
 
-  React.useEffect(() => {
-    console.log("data", data);
-  }, []);
+  // // React.useEffect(() => {
+  // //   console.log("data", data);
+  // // }, []);
 
-  const fetchAllProducts = async (selectedCurrency) => {
-    const productsResponse = await query(getAllProducts(selectedCurrency));
-    const allproducts = productsResponse?.data?.products || [];
-    return allproducts;
+  // const fetchAllProducts = async (selectedCurrency) => {
+  //   const productsResponse = await query(getAllProducts(selectedCurrency));
+  //   const allproducts = productsResponse?.data?.products || [];
+  //   return allproducts;
+  // };
+
+  const handleAddToCart = (product) => {
+    let cart = cartData.cart;
+    dispatch(doSetAllToCart(cart, product));
+    setshowCart(true);
   };
   const renderProducts = (allproducts) => {
     let domElems = [];
@@ -56,26 +69,43 @@ const Products = () => {
           <img src={allproducts[i].image_url} alt={allproducts[i].title} />
           <h2>{allproducts[i].title}</h2>
           <p>From: </p>
-          <button type="button">Add to Cart</button>
+          <button type="button" onClick={() => handleAddToCart(allproducts[i])}>
+            Add to Cart
+          </button>
         </li>
       );
     }
     return domElems;
   };
+  const handleCartClose = () => {
+    setshowCart(false);
+  };
   return (
     <StyledContainer>
-      <ReactPlaceholder ready={true} customPlaceholder={<div>Loading</div>}>
-        <ul>{!data.isLoading && renderProducts(data.allproducts)}</ul>
+      <ReactPlaceholder
+        ready={!productsData.allproductsLoading}
+        customPlaceholder={<div>Loading</div>}
+      >
+        <ul>
+          {!productsData.allproductsLoading &&
+            renderProducts(productsData.allproducts)}
+        </ul>
       </ReactPlaceholder>
 
-      <Cart showCart={data.showCart}/>
+      <Cart
+        handleCartClose={handleCartClose}
+        showCart={showCart}
+        currencyData={currencyData}
+        cartData={cartData}
+        currentCurrency={currencyData.currentCurrency}
+      />
     </StyledContainer>
   );
 };
 
 const StyledContainer = styled.main`
   padding: 1.5rem;
-    
+
   @media (min-width: 768px) {
     padding: 2.5rem;
   }

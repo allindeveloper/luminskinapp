@@ -5,9 +5,32 @@ const actionTypes = {
 
   GET_ALL_PRODUCTS_PENDING:"GET_ALL_PRODUCTS_PENDING",
   GET_ALL_PRODUCTS_SUCCESS:"GET_ALL_PRODUCTS_SUCCESS",
+
+  ADD_TO_CART:"ADD_TO_CART",
   
+  REMOVE_FROM_CART:"REMOVE_FROM_CART",
+  SET_CURRENT_CURRENCY:"SET_CURRENT_CURRENCY"
 };
-//
+
+
+
+export const setAddCurrentCurrency = (currentCurrency) => ({
+  type: actionTypes.SET_CURRENT_CURRENCY,
+  payload: { currentCurrency },
+
+});
+//cart
+export const setAddToCart = (cart,product) => ({
+  type: actionTypes.ADD_TO_CART,
+  payload: { cart,product },
+
+});
+export const setRemoveFromCart = (cart) => ({
+  type: actionTypes.REMOVE_FROM_CART,
+  payload: { cart },
+
+});
+
 
 //products
 export const fetchAllProductsPending = (value) => ({

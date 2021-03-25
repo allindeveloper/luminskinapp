@@ -5,12 +5,14 @@ import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import thunk from 'redux-thunk'
 import { promiseMiddleware } from './middleware'
+import cartReducer from "./reducers/cartReducer"
 import currencyReducer from "./reducers/currencyReducer"
 import productsReducer from "./reducers/productsReducer"
 
 const rootReducer = combineReducers({
   currencyReducer,
-  productsReducer
+  productsReducer,
+  cartReducer
 });
  
 const persistConfig = {

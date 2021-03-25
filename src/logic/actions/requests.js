@@ -5,7 +5,11 @@ import actionTypes, {
   fetchAllCurrencyPending,
   fetchAllCurrencySuccess,
   fetchAllProductsPending,
-  fetchAllProductsSuccess
+  fetchAllProductsSuccess,
+
+  setAddCurrentCurrency, setAddToCart,
+
+  setRemoveFromCart
 } from "./actionTypes";
 
 /* Utility functions */
@@ -70,6 +74,25 @@ export function promiseAction(apiRequest, action) {
         requestFailure(err);
         dispatch(action);
       });
+  };
+}
+
+
+export function doSetCurrentCurrency(currentCurrency) {
+  return (dispatch) => {
+    dispatch(setAddCurrentCurrency(currentCurrency));
+  };
+}
+
+export function doSetAllToCart(cart,product) {
+  return (dispatch) => {
+    dispatch(setAddToCart(cart,product));
+  };
+}
+
+export function doRemoveFromCart(cart) {
+  return (dispatch) => {
+    dispatch(setRemoveFromCart(cart));
   };
 }
 
