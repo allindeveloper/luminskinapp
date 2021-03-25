@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import ReactPlaceholder from "react-placeholder";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { appHelpers } from "../../appHelpers";
 import { doSetAllToCart } from "../../logic/actions/requests";
 import Cart from "../Cart/Cart";
+import GridLoader from "../Loader/GridLoader";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -17,44 +18,6 @@ const Products = () => {
   const cartData = cartSelector && cartSelector;
 
   const [showCart, setshowCart] = useState(false);
-  // const [data, setData] = useState({
-  //   selectedCurrency: "USD",
-  //   showCart: false,
-  // });
-  useEffect(() => {
-    // fetchData();
-    console.log("CartData", cartData);
-  }, []);
-
-  // // const fetchData = async () => {
-  // //   try {
-  // //     let selectedCurrency = data.selectedCurrency;
-  // //     const currenciesResponse = await query(getAllCurrencies());
-  // //     const allproducts = await fetchAllProducts(selectedCurrency);
-  // //     const currencies = currenciesResponse?.data?.currency || [];
-  // //     selectedCurrency = currencies.length ? currencies[0] : selectedCurrency;
-  // //     setData({
-  // //       ...data,
-  // //       isLoading: false,
-  // //       allproducts,
-  // //       currencies,
-  // //       selectedCurrency,
-  // //     });
-  // //   } catch (err) {
-  // //     console.error(err);
-  // //     setData({ ...data, isLoading: false, showError: true });
-  // //   }
-  // // };
-
-  // // React.useEffect(() => {
-  // //   console.log("data", data);
-  // // }, []);
-
-  // const fetchAllProducts = async (selectedCurrency) => {
-  //   const productsResponse = await query(getAllProducts(selectedCurrency));
-  //   const allproducts = productsResponse?.data?.products || [];
-  //   return allproducts;
-  // };
 
   const handleAddToCart = (product) => {
     let cart = cartData.cart;
@@ -63,12 +26,13 @@ const Products = () => {
   };
   const renderProducts = (allproducts) => {
     let domElems = [];
+    const {currentCurrency} = currencyData
     for (let i in allproducts) {
       domElems.push(
         <li className="product-item" key={allproducts[i].id}>
           <img src={allproducts[i].image_url} alt={allproducts[i].title} />
           <h2>{allproducts[i].title}</h2>
-          <p>From: </p>
+          <p>From:{appHelpers.formatPrice(currentCurrency).format(allproducts[i].price)} </p>
           <button type="button" onClick={() => handleAddToCart(allproducts[i])}>
             Add to Cart
           </button>
@@ -77,26 +41,28 @@ const Products = () => {
     }
     return domElems;
   };
+
+  useEffect(()=>{
+    console.log("productsData.allproducts",productsData.allproducts)
+  },[])
   const handleCartClose = () => {
     setshowCart(false);
   };
   return (
     <StyledContainer>
-      <ReactPlaceholder
-        ready={!productsData.allproductsLoading}
-        customPlaceholder={<div>Loading</div>}
-      >
+      
+      <GridLoader show={productsData.allproductsLoading}/>
         <ul>
           {!productsData.allproductsLoading &&
             renderProducts(productsData.allproducts)}
         </ul>
-      </ReactPlaceholder>
-
+     
       <Cart
         handleCartClose={handleCartClose}
         showCart={showCart}
-        currencyData={currencyData}
+        allcurrencies={currencyData.allcurrencies}
         cartData={cartData}
+        allproducts={productsData.allproducts}
         currentCurrency={currencyData.currentCurrency}
       />
     </StyledContainer>

@@ -1,5 +1,4 @@
 import { ApolloProvider } from '@apollo/client';
-import Axios from "axios";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from 'react-redux';
@@ -13,18 +12,11 @@ import history from "./history";
 import "./index.css";
 import returnStoreAndPersistor from './logic/configureStore';
 import reportWebVitals from "./reportWebVitals";
-import { Service } from "./Services";
 import * as serviceWorker from "./serviceWorker";
 
 
 const {store} = returnStoreAndPersistor();
 const {persistor} = returnStoreAndPersistor();
-
-// const client = new ApolloClient({
-//   uri: 'https://pangaea-interviews.now.sh/api/graphql',
-//   cache: new InMemoryCache()
-// });
-const url = process.env.REACT_APP_BASE_URI;
 
 ReactDOM.render(
   <Provider store={store}>
@@ -32,7 +24,7 @@ ReactDOM.render(
   <BrowserRouter history={history} basename={config.basename}>
     <>
       <ApolloProvider client={client}>
-      <Layout Constants={Constants} Service={Service.bind(null, url, Axios)} />
+      <Layout Constants={Constants}  />
       </ApolloProvider>
     </>
   </BrowserRouter>

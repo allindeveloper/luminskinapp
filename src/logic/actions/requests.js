@@ -6,7 +6,7 @@ import actionTypes, {
   fetchAllCurrencySuccess,
   fetchAllProductsPending,
   fetchAllProductsSuccess,
-  setAddCurrentCurrency, setAddToCart, setDecrementItemQuantity, setIncrementItemQuantity, setRemoveFromCartItem
+  setAddCurrentCurrency, setAddToCart, setDecrementItemQuantity, setIncrementItemQuantity, setRemoveFromCartItem, setUpdateCart
 } from "./actionTypes";
 
 /* Utility functions */
@@ -60,7 +60,6 @@ export function promiseAction(apiRequest, action) {
     dispatch({ type: actionTypes.BEGIN_REQUEST });
     apiRequest
       .then((res) => {
-        console.log("Result data", res);
         action.payload = getDataFromResult(res);
         requestSuccess(action.payload);
         dispatch(action);
@@ -74,6 +73,18 @@ export function promiseAction(apiRequest, action) {
   };
 }
 
+
+// These are the requests that are being called from the components/pages
+
+
+export function dosetUpdateCart(cart,products) {
+  console.log("carrt innder",cart)
+  console.log("products innder",products)
+
+  return (dispatch) => {
+    dispatch(setUpdateCart(cart,products));
+  };
+}
 export function doIncrementCartItemQuantity(selectedItem,cart) {
   return (dispatch) => {
     dispatch(setIncrementItemQuantity(selectedItem,cart));

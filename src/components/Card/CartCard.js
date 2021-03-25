@@ -18,14 +18,14 @@ const CartCard = ({index, item, currentCurrency, handleIncrementItemQuantity ,ha
             }}
           >
             <h4>{item.title}</h4>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div className="card-it">
               <div className="cart-product-quantity">
                 <img
                   src={Minus}
                   alt="Minus Icon"
                     onClick={()=>handleDecrementItemQuantity(item, index)}
                 />
-                <span className="cart-product-quantity">
+                <span className="cart-product-counter">
                   {item.quantity}
                 </span>
                 <img

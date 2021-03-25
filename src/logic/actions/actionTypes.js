@@ -14,12 +14,19 @@ const actionTypes = {
 
   INCREMENT_ITEM_QUANITY:"INCREMENT_ITEM_QUANITY",
 
-  DECREMENT_ITEM_QUANITY:"DECREMENT_ITEM_QUANITY"
+  DECREMENT_ITEM_QUANITY:"DECREMENT_ITEM_QUANITY",
+
+  UPDATE_CART_PRICE:"UPDATE_CART_PRICE"
 };
 
 
 
 
+export const setUpdateCart = (cart,products) => ({
+  type: actionTypes.UPDATE_CART_PRICE,
+  payload: { cart ,products},
+
+});
 export const setIncrementItemQuantity = (selectedItem,cart) => ({
   type: actionTypes.INCREMENT_ITEM_QUANITY,
   payload: { selectedItem ,cart},

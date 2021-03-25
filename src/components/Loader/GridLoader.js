@@ -2,8 +2,9 @@ import React from 'react'
 import ContentLoader from 'react-content-loader'
 
 const GridLoader = props => {
+  const {show} = props
   return (
-    <ContentLoader viewBox="0 0 820 450"style={{ width: '100%' }} height={450}  {...props}>
+    show&&<ContentLoader viewBox="0 0 820 450"style={{ width: '100%' }} height={450}  {...props}>
       <rect x="10" y="10" rx="5" ry="5" width="260" height="140" />
       <rect x="280" y="10" rx="5" ry="5" width="260" height="280" />
       <rect x="550" y="10" rx="5" ry="5" width="260" height="140" />

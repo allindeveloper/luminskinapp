@@ -23,7 +23,7 @@ const Home = (props) => {
 
   return (
     <Aux>
-      <div className="jumbotron">
+      <div className="">
         <Header />
         
         <Products/>

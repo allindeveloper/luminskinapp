@@ -2,7 +2,7 @@ import actionTypes from "../actions/actionTypes";
 
 const initialState = {
   allproducts:[],
-  allproductsLoading:false
+  allproductsLoading:true
 };
 
 const productsReducer = (state = initialState, action) => {
@@ -10,7 +10,8 @@ const productsReducer = (state = initialState, action) => {
     case actionTypes.GET_ALL_PRODUCTS_PENDING:
       return {
         ...state,
-        allproducts:action.payload.value
+        allproducts:[],
+        allproductsLoading:true
       };
     case actionTypes.GET_ALL_PRODUCTS_SUCCESS:
       return {

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import SpaceBottom from '../Space/SpaceBottom';
 
 const StyledContainer = styled.header`
   display: flex;
@@ -7,10 +8,8 @@ const StyledContainer = styled.header`
   justify-content: center;
   
   & > div {
-    max-width: 1220px;
     width: 100%;
-    margin: 0 auto;
-
+   
     h1 {
       font-family: 'Lora', serif;
       font-weight: 400;
@@ -24,11 +23,12 @@ const StyledContainer = styled.header`
 const Header = () => {
   return (
     <StyledContainer>
-      <div>
+      <div className="jumbotron">
         <h1>All Products</h1>
         
+        <SpaceBottom length={30}/>
         <p>A 360° look at Lumin</p>
-        
+        <SpaceBottom length={30}/>
       </div>
      
     </StyledContainer>

@@ -3,7 +3,7 @@ import actionTypes from "../actions/actionTypes";
 const initialState = {
   allcurrencies:[],
   allcurrenciesLoading:false,
-  currentCurrency:""
+  currentCurrency:"USD"
 };
 
 const currencyReducer = (state = initialState, action) => {

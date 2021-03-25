@@ -57,6 +57,19 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         cart: newCartMinus,
       };
+
+      case actionTypes.UPDATE_CART_PRICE:
+        let cartNew = action.payload.cart;
+        let productsNew = action.payload.products;
+        cartNew = cartNew.map((item) => {
+          const product = productsNew.find((product) => product.id === item.id);
+          item.price = product.price;
+          return item;
+        });
+        return {
+          ...state,
+          cart: cartNew,
+        };
     case actionTypes.REMOVE_FROM_CART_ITEM:
       let allCartRemove = action.payload.cart;
       let index = action.payload.index
