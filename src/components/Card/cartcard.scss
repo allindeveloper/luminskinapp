@@ -42,12 +42,20 @@
 
 .cart-image {
   position: relative;
+  display: flex;
+  
+}
+.item-remove-icon {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
 }
 
-.cart-image img {
+.cart-image > .item-image {
   max-width: 70px;
   max-height: 70px;
   object-fit: contain;
+  margin: auto 10px;
 }
 
 .cart-product-quantity {

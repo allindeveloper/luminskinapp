@@ -1,11 +1,18 @@
 import React from "react";
 import { appHelpers } from "../../appHelpers";
+import Close from "../../assets/images/svg/close.svg";
 import Minus from "../../assets/images/svg/minus.svg";
 import Plus from "../../assets/images/svg/plus.svg";
 import SpaceBottom from "../Space/SpaceBottom";
 import "./cartcard.scss";
-const CartCard = ({index, item, currentCurrency, handleIncrementItemQuantity ,handleDecrementItemQuantity}) => {
-  
+const CartCard = ({
+  index,
+  item,
+  currentCurrency,
+  handleIncrementItemQuantity,
+  handleDecrementItemQuantity,
+  handleRemoveProduct
+}) => {
   return (
     <div className="row">
       <div className="column">
@@ -23,11 +30,9 @@ const CartCard = ({index, item, currentCurrency, handleIncrementItemQuantity ,ha
                 <img
                   src={Minus}
                   alt="Minus Icon"
-                    onClick={()=>handleDecrementItemQuantity(item, index)}
+                  onClick={() => handleDecrementItemQuantity(item, index)}
                 />
-                <span className="cart-product-counter">
-                  {item.quantity}
-                </span>
+                <span className="cart-product-counter">{item.quantity}</span>
                 <img
                   src={Plus}
                   alt="Plus Icon"
@@ -40,7 +45,14 @@ const CartCard = ({index, item, currentCurrency, handleIncrementItemQuantity ,ha
             </div>
           </div>
           <div className="cart-image">
-            <img src={item.image_url} alt={item.title} />
+            <img className="item-image" src={item.image_url} alt={item.title} /> 
+            <img
+              src={Close}
+              alt="Close Icon"
+              onClick={() => handleRemoveProduct(index)}
+              className="item-remove-icon"
+              title="Remove Item from Cart"
+            />
           </div>
         </div>
         <SpaceBottom length={10} />

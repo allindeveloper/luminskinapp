@@ -4,12 +4,12 @@ import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import { appHelpers } from "../../appHelpers";
 import {
-    doDecrementCartItemQuantity,
-    doIncrementCartItemQuantity,
-    doRemoveFromCartItem,
-    doSetCurrentCurrency,
-    dosetUpdateCart,
-    fetchAllProducts
+  doDecrementCartItemQuantity,
+  doIncrementCartItemQuantity,
+  doRemoveFromCartItem,
+  doSetCurrentCurrency,
+  dosetUpdateCart,
+  fetchAllProducts
 } from "../../logic/actions/requests";
 import CartCard from "../Card/CartCard";
 import ArrowRight from "../CustomIcon/ArrowRight";
@@ -28,6 +28,7 @@ const Cart = ({allproducts, showCart, handleCartClose, cartData,allcurrencies, c
           currentCurrency={currentCurrency}
           handleDecrementItemQuantity={handleDecrementItemQuantity}
           handleIncrementItemQuantity={handleIncrementItemQuantity}
+          handleRemoveProduct={handleRemoveProduct}
         />
       );
     }
@@ -35,7 +36,6 @@ const Cart = ({allproducts, showCart, handleCartClose, cartData,allcurrencies, c
   };
 
   const handleIncrementItemQuantity = (selectedItem) => {
-    console.log("selectedItem", selectedItem);
     dispatch(doIncrementCartItemQuantity(selectedItem, cartData.cart));
   };
 
@@ -46,6 +46,10 @@ const Cart = ({allproducts, showCart, handleCartClose, cartData,allcurrencies, c
       dispatch(doDecrementCartItemQuantity(selectedItem, cartData.cart));
     }
   };
+
+ const handleRemoveProduct = (index)=>{
+    dispatch(doRemoveFromCartItem(cartData.cart, index));
+  }
 
   const getTotalAmount = (cart) => {
     let total = 0;

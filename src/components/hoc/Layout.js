@@ -9,7 +9,6 @@ const  Layout  = (props) => {
   const dispatch = useDispatch();
 
   React.useEffect( ()=>{
-    const { Constants, history} = props;
     dispatch( fetchAllProducts("USD"));
     dispatch( fetchAllCurrency());
 
